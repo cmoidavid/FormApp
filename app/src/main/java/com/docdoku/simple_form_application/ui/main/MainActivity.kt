@@ -1,9 +1,14 @@
-package com.docdoku.simple_form_application
+package com.docdoku.simple_form_application.ui.main
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import com.docdoku.simple_form_application.R
+import com.docdoku.simple_form_application.ui.utils.DatePickerFragment
+import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.EventBus
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), IMainView {
 
     /**
      * In this exercise, we are going to use the MVP pattern
@@ -35,8 +40,63 @@ class MainActivity : AppCompatActivity() {
      * TODO(7): User Dagger to provide instance of IMainPresenter in an ActivityComponent
      * In this case, you can create an annotation called @ActivityScope and use it in your component and module
      */
+
+    private val mPresenter: IMainPresenter = MainPresenter()
+    private val mDatePickerFragment = DatePickerFragment()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        et_dog_found_date.setOnClickListener {
+            mPresenter.onFoundDateClicked()
+        }
+
+        button_validation_dog_creation.setOnClickListener {
+            mPresenter.onFormSubmitted(et_dog_name.text.toString(),
+                    et_dog_description.text.toString(),
+                    et_dog_found_date.text.toString(),
+                    et_dog_age.text.toString())
+        }
+
+        button_cancel_dog_creation.setOnClickListener {
+            mPresenter.onCancel()
+        }
+
+        EventBus.getDefault().register(mPresenter)
+        mPresenter.onAttach(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mPresenter.onDetach()
+    }
+
+    override fun showDatePickerDialog() {
+        mDatePickerFragment.show(supportFragmentManager, "datePicker")
+    }
+
+    override fun showFoundDateError() {
+        et_dog_found_date.error = getString(R.string.found_date_error)
+    }
+
+    override fun showCreationSuccessful() {
+        Snackbar.make(cl_main_activity, getString(R.string.dog_creation_success), Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun showCreationError() {
+        Snackbar.make(cl_main_activity, getString(R.string.dog_creation_error), Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun showFoundDate(foundDate: String) {
+        et_dog_found_date.setText(foundDate)
+    }
+
+    override fun showAgeInputError() {
+        et_dog_age.error = getString(R.string.input_age_error)
+    }
+
+    override fun abort() {
+        finish()
     }
 }

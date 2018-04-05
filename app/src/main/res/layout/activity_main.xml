@@ -13,6 +13,7 @@
     app:layout_constraintTop_toTopOf="parent">
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_main_activity"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -112,7 +113,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center|start|bottom"
-                android:hint="Date when dog has been found" />
+                android:hint="Date when dog has been found"
+                android:focusableInTouchMode="false"/>
 
         </android.support.design.widget.TextInputLayout>
 

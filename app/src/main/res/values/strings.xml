@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Simple_form_application</string>
+    <string name="found_date_error">Selected date should not be in the future</string>
+    <string name="dog_creation_success">Dog successfully created</string>
+    <string name="dog_creation_error">An error occurred while creating the dog</string>
+    <string name="input_age_error">Age should be an integer</string>
 </resources>
