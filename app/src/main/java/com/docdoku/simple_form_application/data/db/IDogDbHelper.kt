@@ -5,4 +5,6 @@ import io.reactivex.Single
 
 interface IDogDbHelper {
     fun insertDog(dog: Dog): Single<Int>
+    fun getDogs(): List<Dog>
+    fun getRemoteDogs(): List<Dog>
 }

@@ -35,4 +35,12 @@ class FakeDataManager : IDataManager {
             it.onSuccess(1)
         }
     }
+
+    override fun getDogs(): List<Dog> {
+        return dogs.toList()
+    }
+
+    override fun getRemoteDogs(): List<Dog> {
+        return remoteDogs.toList()
+    }
 }
