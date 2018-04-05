@@ -4,7 +4,7 @@ import com.docdoku.simple_form_application.model.Dog
 import io.reactivex.Completable
 import io.reactivex.Single
 
-class FakeDataManager : IDataManager {
+open class FakeDataManager : IDataManager {
 
     private val remoteDogs = mutableListOf<Dog>() // This would be the dogs stored in a back-end server
     private val dogs = mutableListOf<Dog>() // This would be the dogs stored locally in database
