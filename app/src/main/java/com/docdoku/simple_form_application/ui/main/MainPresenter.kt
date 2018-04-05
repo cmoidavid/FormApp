@@ -1,26 +1,22 @@
 package com.docdoku.simple_form_application.ui.main
 
-import com.docdoku.simple_form_application.data.FakeDataManager
 import com.docdoku.simple_form_application.data.IDataManager
 import com.docdoku.simple_form_application.model.Dog
 import com.docdoku.simple_form_application.utils.logger.ILogger
-import com.docdoku.simple_form_application.utils.logger.Logger
 import com.docdoku.simple_form_application.utils.rx.ISchedulerProvider
-import com.docdoku.simple_form_application.utils.rx.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeParseException
+import javax.inject.Inject
 
-class MainPresenter : IMainPresenter {
+class MainPresenter @Inject constructor(val disposables: CompositeDisposable,
+                                        val dataManager: IDataManager,
+                                        val mSchedulerProvider: ISchedulerProvider,
+                                        val mLogger: ILogger) : IMainPresenter {
 
     private var mView: IMainView? = null
-    private val disposables = CompositeDisposable()
-    private val dataManager: IDataManager = FakeDataManager()
-    private val mSchedulerProvider: ISchedulerProvider = SchedulerProvider()
-    private val mLogger: ILogger = Logger()
-
 
     override fun onFoundDateClicked() {
         mView?.showDatePickerDialog()

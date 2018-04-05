@@ -3,10 +3,13 @@ package com.docdoku.simple_form_application.ui.main
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import com.docdoku.simple_form_application.MyApplication
 import com.docdoku.simple_form_application.R
+import com.docdoku.simple_form_application.di.component.DaggerActivityComponent
 import com.docdoku.simple_form_application.ui.utils.DatePickerFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), IMainView {
 
@@ -41,12 +44,20 @@ class MainActivity : AppCompatActivity(), IMainView {
      * In this case, you can create an annotation called @ActivityScope and use it in your component and module
      */
 
-    private val mPresenter: IMainPresenter = MainPresenter()
-    private val mDatePickerFragment = DatePickerFragment()
+    @Inject
+    lateinit var mPresenter: IMainPresenter
+
+    @Inject
+    lateinit var mDatePickerFragment: DatePickerFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        DaggerActivityComponent.builder()
+                .applicationComponent((application as MyApplication).applicationComponent)
+                .build()
+                .inject(this)
 
         et_dog_found_date.setOnClickListener {
             mPresenter.onFoundDateClicked()
