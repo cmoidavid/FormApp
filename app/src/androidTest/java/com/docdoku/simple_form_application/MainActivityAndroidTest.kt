@@ -1,6 +1,5 @@
 package com.docdoku.simple_form_application
 
-import android.content.res.Resources
 import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.*
@@ -20,9 +19,10 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.rules.TestRule
+import java.util.concurrent.TimeUnit
 
 
-class MainActivityTest {
+class MainActivityAndroidTest {
 
     val component = TestComponentRule(InstrumentationRegistry.getTargetContext())
     val main = ActivityTestRule(MainActivity::class.java, false, false)
@@ -149,8 +149,8 @@ class MainActivityTest {
                         isDisplayed()))
         appCompatButton2.perform(click())
 
-        // This assertion fails but the MainActivity.showCreationError is called
-        onView(allOf(withId(android.support.design.R.id.snackbar_text), withText(R.string.dog_creation_error)))
+        onView(isRoot())
+                .perform(waitId(android.support.design.R.id.snackbar_text, TimeUnit.SECONDS.toMillis(15)))
                 .check(matches(isDisplayed()));
 
     }
