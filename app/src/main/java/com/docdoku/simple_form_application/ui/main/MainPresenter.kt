@@ -1,6 +1,5 @@
 package com.docdoku.simple_form_application.ui.main
 
-import com.docdoku.simple_form_application.data.FakeDataManager
 import com.docdoku.simple_form_application.data.IDataManager
 import com.docdoku.simple_form_application.model.Dog
 import com.docdoku.simple_form_application.utils.logger.ILogger
@@ -13,11 +12,10 @@ import org.greenrobot.eventbus.ThreadMode
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeParseException
 
-class MainPresenter : IMainPresenter {
+class MainPresenter(val dataManager: IDataManager) : IMainPresenter {
 
     private var mView: IMainView? = null
     private val disposables = CompositeDisposable()
-    private val dataManager: IDataManager = FakeDataManager()
     private val mSchedulerProvider: ISchedulerProvider = SchedulerProvider()
     private val mLogger: ILogger = Logger()
 

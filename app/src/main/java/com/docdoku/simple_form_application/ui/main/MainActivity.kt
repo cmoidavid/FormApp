@@ -7,6 +7,7 @@ import com.docdoku.simple_form_application.R
 import com.docdoku.simple_form_application.ui.utils.DatePickerFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity(), IMainView {
 
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity(), IMainView {
      * In this case, you can create an annotation called @ActivityScope and use it in your component and module
      */
 
-    private val mPresenter: IMainPresenter = MainPresenter()
+    private val mPresenter: MainPresenter by inject()
     private val mDatePickerFragment = DatePickerFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
